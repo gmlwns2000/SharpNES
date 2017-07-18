@@ -23,7 +23,8 @@ namespace SharpNES.Test
             logger.Log(LogLevel.Debug, "Main", "This is a Debug message");
             logger.Log(LogLevel.Debug2, "Main", "This is an Debug2 message");
             logger.Log(LogLevel.Debug3, "Main", "This is an Debug3 message");
- 
+
+            Console.ReadLine();
        }
     }
 }
