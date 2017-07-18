@@ -40,7 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Console.cs" />
     <Compile Include="Core\CPU.cs" />
+    <Compile Include="Core\Memory.cs" />
     <Compile Include="Utility\Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
