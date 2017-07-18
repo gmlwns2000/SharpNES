@@ -13,16 +13,17 @@ namespace SharpNES.Test
         static void Main(string[] args)
         {
             // Test logging
-            var logger = new Logger<DefaultFormater, ConsoleStream>(LogLevel.DEBUG3);
+            var logger = new Logger<DefaultFormater, ConsoleStream>(LogLevel.Debug3);
 
-            logger.Log(LogLevel.INFO, "Main", "This is an Info message");
-            logger.Log(LogLevel.WARNING, "Main", "This is an Warning message");
-            logger.Log(LogLevel.ERROR, "Main", "This is an Error message");
-            logger.Log(LogLevel.FATAL, "Main", "This is an Fatal message");
+            logger.Log(LogLevel.Info, "Main", "This is an Info message");
+            logger.Log(LogLevel.Warning, "Main", "This is an Warning message");
+            logger.Log(LogLevel.Error, "Main", "This is an Error message");
+            logger.Log(LogLevel.Fatal, "Main", "This is an Fatal message");
 
-            logger.Log(LogLevel.DEBUG, "Main", "This is a Debug message");
-            logger.Log(LogLevel.DEBUG2, "Main", "This is an Debug2 message");
-            logger.Log(LogLevel.DEBUG3, "Main", "This is an Debug3 message");
-        }
+            logger.Log(LogLevel.Debug, "Main", "This is a Debug message");
+            logger.Log(LogLevel.Debug2, "Main", "This is an Debug2 message");
+            logger.Log(LogLevel.Debug3, "Main", "This is an Debug3 message");
+ 
+       }
     }
 }

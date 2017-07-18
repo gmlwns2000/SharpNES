@@ -4,31 +4,31 @@ namespace SharpNES.Utility
 {
     public enum LogLevel
     {
-        DEBUG3, DEBUG2, DEBUG,
-        INFO, WARNING, ERROR, FATAL
+        Debug3, Debug2, Debug,
+        Info, Warning, Error, Fatal
     }
 
     // ---------- Policies ---------- //
-    public interface FormatPolicy
+    public interface IFormatPolicy
     {
         string Format(string timestamp, LogLevel level, string tag, string message);
     }
 
-    public interface StreamPolicy
+    public interface IStreamPolicy
     {
         void Write(LogLevel level, string buffer);
     }
 
     public class Logger<Formater, StreamWriter>
-        where Formater : FormatPolicy, new()
-        where StreamWriter : StreamPolicy, new()
+        where Formater : IFormatPolicy, new()
+        where StreamWriter : IStreamPolicy, new()
     {
-        private FormatPolicy _formater = new Formater();
-        private StreamPolicy _streamWriter = new StreamWriter();
+        private IFormatPolicy _formater = new Formater();
+        private IStreamPolicy _streamWriter = new StreamWriter();
 
         public LogLevel MinLogLevel { get; set; }
 
-        public Logger(LogLevel minLevel = LogLevel.INFO)
+        public Logger(LogLevel minLevel = LogLevel.Info)
         {
             MinLogLevel = minLevel;
         }
@@ -49,27 +49,27 @@ namespace SharpNES.Utility
             }
         }
 
-        public void LogFatal(string tag, string msg) { Log(LogLevel.FATAL, tag, msg); }
-        public void LogError(string tag, string msg) { Log(LogLevel.ERROR, tag, msg); }
-        public void LogWarning(string tag, string msg) { Log(LogLevel.WARNING, tag, msg); }
-        public void LogInfo(string tag, string msg) { Log(LogLevel.INFO, tag, msg); }
-        public void LogDebug(string tag, string msg) { Log(LogLevel.DEBUG, tag, msg); }
-        public void LogDebug2(string tag, string msg) { Log(LogLevel.DEBUG2, tag, msg); }
-        public void LogDebug3(string tag, string msg) { Log(LogLevel.DEBUG3, tag, msg); }
+        public void LogFatal(string tag, string msg) { Log(LogLevel.Fatal, tag, msg); }
+        public void LogError(string tag, string msg) { Log(LogLevel.Error, tag, msg); }
+        public void LogWarning(string tag, string msg) { Log(LogLevel.Warning, tag, msg); }
+        public void LogInfo(string tag, string msg) { Log(LogLevel.Info, tag, msg); }
+        public void LogDebug(string tag, string msg) { Log(LogLevel.Debug, tag, msg); }
+        public void LogDebug2(string tag, string msg) { Log(LogLevel.Debug2, tag, msg); }
+        public void LogDebug3(string tag, string msg) { Log(LogLevel.Debug3, tag, msg); }
     }
 
     public class DefaultLogger : Logger<DefaultFormater, ConsoleStream>
     {
-        public DefaultLogger(LogLevel level = LogLevel.INFO)
+        public DefaultLogger(LogLevel level = LogLevel.Info)
             : base(level)
         {
         }
     }
 
     // ---------- Basic policies ---------- //
-    public class DefaultFormater : FormatPolicy
+    public class DefaultFormater : IFormatPolicy
     {
-        string FormatPolicy.Format(string timestamp, LogLevel level, string tag, string msg)
+        string IFormatPolicy.Format(string timestamp, LogLevel level, string tag, string msg)
         {
             string buffer = "- ";
             buffer += timestamp;
@@ -85,21 +85,21 @@ namespace SharpNES.Utility
         }
     }
 
-    public class ConsoleStream : StreamPolicy
+    public class ConsoleStream : IStreamPolicy
     {
         private static readonly ConsoleColor[] _colorSet =
             {
-                ConsoleColor.White, // DEBUG3
-                ConsoleColor.White, // DEBUG2
-                ConsoleColor.White, // DEBUG
+                ConsoleColor.White, // Debug3
+                ConsoleColor.White, // Debug2
+                ConsoleColor.White, // Debug
 
-                ConsoleColor.DarkGreen, // INFO
-                ConsoleColor.Yellow, // WARNING
-                ConsoleColor.Red, // ERROR
-                ConsoleColor.Red, // FATAL
+                ConsoleColor.DarkGreen, // Info
+                ConsoleColor.Yellow, // Warning
+                ConsoleColor.Red, // Error
+                ConsoleColor.Red, // Fatal
             };
 
-        void StreamPolicy.Write(LogLevel level, string buffer)
+        void IStreamPolicy.Write(LogLevel level, string buffer)
         {
             Console.ForegroundColor = _colorSet[(int)level];
             Console.WriteLine(buffer);
