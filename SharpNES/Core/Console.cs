@@ -5,9 +5,10 @@ namespace SharpNES.Core
     {
         public Console(string path)
         {
+            NesCPU = new CPU(this);
         }
 
-        public CPU NesCPU { get; set; } = new CPU();
+        public CPU NesCPU { get; set; }
     }
 
 
